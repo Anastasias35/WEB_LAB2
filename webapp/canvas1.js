@@ -87,10 +87,10 @@ function drawCanvas(){
     context.lineTo(400,230);
     context.stroke();
 
-
+    clickOnGraph();
 
 }
-
+/*
 function clickOnGraph(){
     canvas.addEventListener("mousedown",function (e){
         if(validateR()){
@@ -104,3 +104,5 @@ function clickOnGraph(){
         }
     });
 }
+
+ */
