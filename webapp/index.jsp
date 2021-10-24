@@ -73,7 +73,7 @@
     </table>
 
 </table>
-<script src="canvas1.js"></script>
+<script src="canvas.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="validate.js"></script>
 </body>

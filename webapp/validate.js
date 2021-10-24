@@ -3,34 +3,42 @@ const maxy=5;
 const valx=[-2.0,-1.5,-1.0,-0.5,0.0,0.5,1.0,1.5,2.0];
 const valr=[1,2,3,4,5];
 
-function clickOnGraph(){ // отметки точек на графике
-    canvas.addEventListener("mousedown",function (e){
+$(".radius").click(function (){
+    clear();
+    drawCanvas();
+    console.log(" 1");
+});
+
+
+function clickOnGraph(canvas,e){
+    console.log("3");
+    //canvas.addEventListener("mousedown",function (e){
+        console.log("4");
         if(validateR()){
             context.beginPath();
             context.fillStyle="#a2a8f3";
             context.arc(e.offsetX,e.offsetY,3,0,Math.PI*2);
             context.fill();
-
+            console.log("5");
             $('[class="radius"]:checked').each(function ()
             {
-                let r=$('[class="radius"]:checked').val();
+                console.log("6");
+                let r=$(this).val();
                 let x=(e.offsetX - 225) * r / 175;
                 x=x.toFixed(1).replace(".0","");
                 let y=(e.offsetY - 225) * r / 175;
                 y=y.toFixed(5).replace(".0","");
                 if (x>=-2 && x<=2 && (Math.ceil(y) <= miny || Math.floor(y))){
-                    alert(true);
+                    console.log("7");
                     submitPoints(x,y,r);
-                    //добавить валидацию
                 }
-
             });
 
         }
         else{
             alert("Невозможно определить координаты точки");
         }
-    });
+   // });
 }
 
 function validateY(){  // валидация y
@@ -117,23 +125,29 @@ $('form').on('submit',function(event){
     event.preventDefault();
     if(!validate()) return;
     else{
-        var request = new XMLHttpRequest();
-        let data=$(this).serialize();
-        console.log(data);
-        request.open('GET','/controllerservlet' + '?' + data,true);
-        request.send();
-        request.onload=function (){
-            if(request.status != 200){
-                console.log(request.responseText);
-                alert(`Ошибка ${request.status}: ${request.statusText}`);
-            }
-            else{
-                console.log(request.responseText);
-                let result= request.responseText;
-                document.querySelector(".table-result").innerHTML+=result;
+        checkR.forEach(function (entry){
+            checkX.forEach(function (entryx){
+                var request = new XMLHttpRequest();
+                let data="Coordinates_X=" +entryx +  "&Coordinates_Y=" + $(".coordinates_y").val()+ "&radius=" + entry;
+                console.log(data);
+                request.open('GET','/controllerservlet' + '?' + data,true);
+                request.send();
+                request.onload=function (){
+                    if(request.status != 200){
+                        console.log(request.responseText);
+                        alert(`Ошибка ${request.status}: ${request.statusText}`);
+                    }
+                    else{
+                        console.log(request.responseText);
+                        let result= request.responseText;
+                        document.querySelector(".table-result").innerHTML+=result;
 
-            }
-        }
+                    }
+                }
+            });
+
+        });
+
         $('form').trigger('reset');
     }
 });
