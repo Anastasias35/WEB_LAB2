@@ -1,4 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="bean.Point" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Collections" %>
+<jsp:useBean id="point" class="bean.Results" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,6 +74,18 @@
             <td colspan="2">Current time</td>
             <td colspan="2">Spending time</td>
         </tr>
+        <% List<Point> pointList = point.getPointList();
+        Collections.reverse(pointList);
+        for (Point point1: pointList) { %>
+        <tr>
+            <td><%=point1.getX()%></td>
+            <td class="y-table-value"><%=point1.getY()%></td>
+            <td class="r-table-value"><%=point1.getR()%></td>
+            <td><%=point1.isResult()%></td>
+            <td colspan="2"><%=point1.getCurTime()%></td>
+            <td colspan="2"><%=point1.getExeTime()%></td>
+        </tr>
+        <% } %>
     </table>
 
 </table>
