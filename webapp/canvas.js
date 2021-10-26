@@ -7,7 +7,6 @@ function drawCanvas(){
 
     radius=$('[class="radius"]:checked').val();
 
-    console.log("2");
     canvas.width=450;
     canvas.height=450;
     context.fillStyle="#adecff";
@@ -168,9 +167,6 @@ function drawCanvas(){
     context.lineTo(25,230);
     context.stroke();
 
-
-    //clickOnGraph();
-
 }
 
 function drawSquare(R){
@@ -191,13 +187,27 @@ function drawCircle(R){
     context.fill();
 }
 
-function drawPoints(){
-
-}
-
 function clear(){
     context.save();
     context.clearRect(0,0,canvas.width,canvas.height);
     context.restore();
 }
 
+function drawPoint(x,y){
+    context.beginPath();
+    context.fillStyle="#a2a8f3";
+    context.arc(x,y,3,0,Math.PI*2);
+    context.fill();
+}
+
+function drawResult(){
+    console.log("ssss");
+    let coordx = Array.from(document.getElementsByClassName("table_x")).map(v => v.innerHTML);
+    let coordy = Array.from(document.getElementsByClassName("table_y")).map(v => v.innerHTML);
+    let radius = Array.from(document.getElementsByClassName("table_r")).map(v => v.innerHTML);
+    for (let i=0;i<coordx.length;i++){
+        console.log(" ddd");
+        console.log(coordx[i], " ssss");
+        drawPoint(coordx[i]*40+225,225- coordy[i]*40);
+    }
+}

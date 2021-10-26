@@ -4,41 +4,39 @@ const valx=[-2.0,-1.5,-1.0,-0.5,0.0,0.5,1.0,1.5,2.0];
 const valr=[1,2,3,4,5];
 
 $(".radius").click(function (){
+    console.log($('[class="radius"]:checked').val());
+    console.log($(this).val());
     clear();
     drawCanvas();
-    console.log(" 1");
+    drawResult();
 });
 
 
 function clickOnGraph(canvas,e){
-    console.log("3");
-    //canvas.addEventListener("mousedown",function (e){
-        console.log("4");
         if(validateR()){
-            context.beginPath();
-            context.fillStyle="#a2a8f3";
-            context.arc(e.offsetX,e.offsetY,3,0,Math.PI*2);
-            context.fill();
-            console.log("5");
+        //    context.beginPath();
+        //    context.fillStyle="#a2a8f3";
+        //    context.arc(e.offsetX,e.offsetY,3,0,Math.PI*2);
+        //    context.fill();
             $('[class="radius"]:checked').each(function ()
             {
-                console.log("6");
                 let r=$(this).val();
-                let x=(e.offsetX - 225) * r / 175;
-                x=x.toFixed(1).replace(".0","");
-                let y=(e.offsetY - 225) * r / 175;
-                y=y.toFixed(5).replace(".0","");
-                if (x>=-2 && x<=2 && (Math.ceil(y) <= miny || Math.floor(y))){
-                    console.log("7");
+                let x=(e.offsetX - 225) / 40;
+                x=x.toFixed(1);
+                let y=(225 - e.offsetY)  / 40;
+                y=y.toFixed(5);
+                console.log(x," ",y);
+
+                if (x>=-2 && x<=2 && Math.ceil(y) >=miny &&  Math.floor(y)<=maxy){
+                    console.log("успешно");
                     submitPoints(x,y,r);
                 }
             });
-
+            drawPoint(e.offsetX,e.offsetY);
         }
         else{
             alert("Невозможно определить координаты точки");
         }
-   // });
 }
 
 function validateY(){  // валидация y
@@ -121,6 +119,7 @@ function submitPoints(x,y,r){
     }
 }
 
+
 $('form').on('submit',function(event){
     event.preventDefault();
     if(!validate()) return;
@@ -149,6 +148,8 @@ $('form').on('submit',function(event){
         });
 
         $('form').trigger('reset');
+        clear();
+        drawCanvas();
     }
 });
 
