@@ -75,12 +75,11 @@
             <td colspan="2">Spending time</td>
         </tr>
         <% List<Point> pointList = point.getPointList();
-        Collections.reverse(pointList);
         for (Point point1: pointList) { %>
         <tr>
-            <td><%=point1.getX()%></td>
-            <td class="y-table-value"><%=point1.getY()%></td>
-            <td class="r-table-value"><%=point1.getR()%></td>
+            <td class="table_x"><%=point1.getX()%></td>
+            <td class="table_y"><%=point1.getY()%></td>
+            <td class="table_r"><%=point1.getR()%></td>
             <td><%=point1.isResult()%></td>
             <td colspan="2"><%=point1.getCurTime()%></td>
             <td colspan="2"><%=point1.getExeTime()%></td>
